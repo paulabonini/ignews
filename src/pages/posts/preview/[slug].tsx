@@ -1,8 +1,8 @@
 import { GetStaticPaths, GetStaticProps } from "next";
-import { getSession, useSession } from "next-auth/client";
+import { useSession } from "next-auth/client";
 import Head from "next/head";
 import Link from "next/link";
-import router, { useRouter } from "next/router";
+import { useRouter } from "next/router";
 import { RichText } from "prismic-dom";
 import { useEffect } from "react";
 import { getPrismicClient } from "../../../services/prismic";
@@ -26,7 +26,7 @@ export default function PostPreview({ post }: PostPreviewProps) {
     if (session?.activeSubscription) {
       router.push(`/posts/${post.slug}`);
     }
-  }, [session]);
+  }, [post.slug, session]);
 
   return (
     <>
@@ -57,11 +57,7 @@ export default function PostPreview({ post }: PostPreviewProps) {
 
 export const getStaticPaths: GetStaticPaths = async () => {
   return {
-    paths: [
-      {
-        params: { slug: "o-que-e-blog" },
-      },
-    ],
+    paths: [],
     fallback: "blocking",
   };
 };
